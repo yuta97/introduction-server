@@ -1,0 +1,14 @@
+GET / HTTP/1.1
+Host: localhost:8080
+Connection: keep-alive
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9,ja-JP;q=0.8,ja;q=0.7
+Cookie: csrftoken=Q7KcOKnrofeMj5O3lVwIUdnQX6mRN9nA5Y2meY92BO0JYqLkPmelckuys3Oz9fX1; sessionid=3gav69k55t8z7hq739oo3rlbqgdn070g; JSESSIONID.4f48e0cb=node01ligkzywvtll633vkt8wgw5921.node0
+
