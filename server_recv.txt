@@ -1,14 +1,15 @@
 GET /parameters HTTP/1.1
 Host: localhost:8080
 Connection: keep-alive
+sec-ch-ua: "Google Chrome";v="87", " Not;A Brand";v="99", "Chromium";v="87"
+sec-ch-ua-mobile: ?0
 Upgrade-Insecure-Requests: 1
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
 Sec-Fetch-Site: none
 Sec-Fetch-Mode: navigate
-Sec-Fetch-User: ?1
 Sec-Fetch-Dest: document
 Accept-Encoding: gzip, deflate, br
 Accept-Language: en-US,en;q=0.9,ja-JP;q=0.8,ja;q=0.7
-Cookie: csrftoken=Q7KcOKnrofeMj5O3lVwIUdnQX6mRN9nA5Y2meY92BO0JYqLkPmelckuys3Oz9fX1; sessionid=3gav69k55t8z7hq739oo3rlbqgdn070g; JSESSIONID.4f48e0cb=node01ligkzywvtll633vkt8wgw5921.node0
+Cookie: csrftoken=Q7KcOKnrofeMj5O3lVwIUdnQX6mRN9nA5Y2meY92BO0JYqLkPmelckuys3Oz9fX1; sessionid=3gav69k55t8z7hq739oo3rlbqgdn070g; JSESSIONID.4f48e0cb=node01ligkzywvtll633vkt8wgw5921.node0; JSESSIONID.4f4d1878=node01egb80l8o5vqpic133z8p4o4t0.node0
 
