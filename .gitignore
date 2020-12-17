@@ -1,3 +1,5 @@
 __pycache__/
 henango/http/__pycache__/
-server/__pycache__/
+henango/server/__pycache__/
+henango/urls/__pycache__/
+henango/views/__pycache__/

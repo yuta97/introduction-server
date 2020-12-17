@@ -2,15 +2,15 @@ import os
 import re
 import traceback
 from datetime import datetime
-from re import Match
 from socket import socket
 from threading import Thread
-from typing import Tuple, Optional
+from typing import Tuple
 
 import settings
 from henango.http.request import HTTPRequest
 from henango.http.response import HTTPResponse
-from urls import URL_VIEW
+from henango.urls.resolver import URLResolver
+from urls import url_patterns
 
 
 class Worker(Thread):
@@ -59,28 +59,10 @@ class Worker(Thread):
             # HTTPリクエストをパースする
             request = self.parse_http_request(request_bytes)
 
-            # pathにマッチするurl_patternを探し、見つかればviewからレスポンスを生成する
-            for url_pattern, view in URL_VIEW.items():
-                match = self.url_match(url_pattern, request.path)
-                if match:
-                    request.params.update(match.groupdict())
-                    response = view(request)
-                    break
-            # pathがそれ以外のときは、静的ファイルからレスポンスを生成する
-            else:
-                try:
-                    response_body = self.get_static_file_content(request.path)
-                    content_type = None
-                    response = HTTPResponse(body=response_body, content_type=content_type, status_code=200)
+            view = URLResolver().resolve(request)
 
-                except OSError:
-                    # レスポンスを取得できなかった場合は、ログを出力して404を返す
-                    traceback.print_exc()
-
-                    response_body = b"<html><body><h1>404 Not Found</h1></body></html>"
-                    content_type = "text/html;"
-                    response = HTTPResponse(body=response_body, content_type=content_type, status_code=404)
-
+            response = view(request)      
+            
             # レスポンスラインを生成
             response_line = self.build_response_line(response)
 
@@ -127,20 +109,6 @@ class Worker(Thread):
 
         return HTTPRequest(method=method, path=path, http_version=http_version, headers=headers, body=request_body)
 
-    def get_static_file_content(self, path: str) -> bytes:
-        """
-        リクエストpathから、staticファイルの内容を取得する
-        """
-        default_static_root = os.path.join(os.path.dirname(__file__), "../../static")
-        static_root = getattr(settings, "STATIC_ROOT", default_static_root)
-        # pathの先頭の/を削除し、相対パスにしておく
-        relative_path = path.lstrip("/")
-        # ファイルのpathを取得
-        static_file_path = os.path.join(static_root, relative_path)
-
-        with open(static_file_path, "rb") as f:
-            return f.read()
-
     def build_response_line(self, response: HTTPResponse) -> str:
         """
         レスポンスラインを構築する
@@ -172,9 +140,3 @@ class Worker(Thread):
         response_header += f"Content-Type: {response.content_type}\r\n"
 
         return response_header
-    
-    def url_match(self, url_pattern: str, path: str) -> Optional[Match]:
-        # URLパターンを正規表現パターンに変換する
-        # ex) '/user/<user_id>/profile' => '/user/(?P<user_id>[^/]+)/profile'
-        re_pattern = re.sub(r"<(.+?)>", r"(?P<\1>[^/]+)", url_pattern)
-        return re.match(re_pattern, path)
